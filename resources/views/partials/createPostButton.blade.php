@@ -1,0 +1,1 @@
+<a href="/posts/create" class="btn btn-success pull-right">Create Post</a>
