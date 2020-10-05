@@ -68,4 +68,19 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    /**
+     * Override showRegistrationForm to disable registration form.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function showRegistrationForm()
+    {
+        return redirect('login');
+    }
+
+    public function register(Request $request)
+    {
+        abort(404);
+    }
 }

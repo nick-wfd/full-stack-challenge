@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @yield('app_style')
 </head>
 <body>
     <div id="app">
@@ -44,7 +46,6 @@
                         <!-- Authentication Links -->
                         @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
@@ -53,9 +54,15 @@
 
                                 <ul class="dropdown-menu">
                                     <li>
+                                        <a href="{{ route('referrals') }}">
+                                            Referrals
+                                        </a>
+                                        @if(Auth::user()->hasRole(['admin', 'supervisor']))
                                         <a href="{{ route('add-referral') }}">
                                             Add Referral
                                         </a>
+                                        @endif
+                                        
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -92,5 +99,7 @@
             });
         });
     </script>
+
+    @yield('app_script')
 </body>
 </html>

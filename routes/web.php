@@ -29,7 +29,7 @@ Route::get('posts/{post}', 'PostsController@show');
 Route::get('referrals/upload', 'ReferralController@upload');
 Route::post('referrals/upload', 'ReferralController@processUpload');
 Route::get('referrals/create', 'ReferralController@create')->name('add-referral');
-Route::get('referrals/{country?}/{city?}', 'ReferralController@index');
+Route::get('referrals/{country?}/{city?}', 'ReferralController@index')->name('referrals');
 Route::post('referrals', 'ReferralController@store');
 
 //Logged in Users
@@ -38,3 +38,10 @@ Route::get('my-posts', 'AuthorsController@posts')->name('my-posts');
 //Routes for Authors
 Route::get('authors', 'AuthorsController@index');
 Route::get('authors/{author}', 'AuthorsController@show');
+
+
+// Routers for Users
+Route::resource('users', 'UsersController');
+
+// Routers for Comments
+Route::resource('comments', 'CommentsController');
