@@ -25,18 +25,18 @@ class ReferralController extends Controller
         $country_filter = false;
         //
         if($country == null) { 
-            $referrals = Referral::paginate(15);
+            $referrals = Referral::all();
             $countries = Referral::getCountries();
         }
         elseif($city == null) {
             $country_filter = true;
-            $referrals = Referral::where("country", $country)->paginate(15);
+            $referrals = Referral::where("country", $country)->get();
             $countries = array($country);
             $cities = Referral::getCities($country);
         }
         else {
             $country_filter = true;
-            $referrals = Referral::where("country", $country)->where("city", $city)->paginate(15);
+            $referrals = Referral::where("country", $country)->where("city", $city)->get();
             $countries = array($country);
             $cities = array($city);
         }
@@ -49,8 +49,11 @@ class ReferralController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        if(!$request->user()->hasRole(['admin', 'supervisor'])) {
+            return redirect('referrals');
+        }
         //
         return view('referrals.create');
     }
@@ -63,6 +66,9 @@ class ReferralController extends Controller
      */
     public function store(Request $request)
     {
+        if(!$request->user()->hasRole(['admin', 'supervisor'])) {
+            return redirect('referrals');
+        }
         //
         $this->validate(request(), [
                 'reference_no' => 'required',
@@ -139,11 +145,17 @@ class ReferralController extends Controller
         //
     }
 
-    public function upload() {
+    public function upload(Request $request) {
+        if(!$request->user()->hasRole(['admin', 'supervisor'])) {
+            return redirect('referrals');
+        }
         return view('referrals.upload');
     }
 
     public function processUpload(Request $request) {
+        if(!$request->user()->hasRole(['admin', 'supervisor'])) {
+            return redirect('referrals');
+        }
         $cols = array('country',
             'reference_no',
 'organisation',
